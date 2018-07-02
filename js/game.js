@@ -2,7 +2,6 @@
 //Global Variables
 let gameSession = {};
 let boardHTML = $('.boxes');
-let hover = 'box-hover-1';
 
 //Game session class
   class TicTacToe {
@@ -18,21 +17,10 @@ let hover = 'box-hover-1';
         $(this.board[i]).attr("id", `${i}`);
         $(this.board[i]).click(function () {
           gameSession.turn(i);
-          if (hover == 'box-hover-1') {
-            hover = 'box-hover-1';
-          }else {
-            hover = 'box-hover-2';
-          }
-        });
-        $(this.board[i]).hover(function () {
-          gameSession.hover(i);
         });
       }
     }
 
-    hover(i){
-      $(this.board[i]).toggleClass(hover);
-    }
 
     turn(i) {
       $(this.board[i]).toggleClass("disabled");
@@ -80,6 +68,15 @@ let hover = 'box-hover-1';
 
     gameSession = new TicTacToe("Player 1","Player 2");
     $('#player1').toggleClass('active');
+
+    $(gameSession.board).hover(function () {
+      if (gameSession.playerTurn === 1) {
+        $(this).attr('background-color', '#AAA');
+      }else {
+        console.log('x');
+        $(this).css('background-image', 'url(../img/x.svg)');
+      }
+    });
 
     //console.log(gameSession);
   }
