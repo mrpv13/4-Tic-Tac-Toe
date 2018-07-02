@@ -22,14 +22,42 @@ let boardHTML = $('.boxes');
       let board = [];
       board = $('.boxes').children();
 
+      /*
       for (let i = 0; i < board.length; i++) {
-        $(board[i]).attr("id", `${i}`);
-        $(board[i]).click(function (){
-          alert(`This is box # ${i}`);
-        });
+        $(board[i]).click(gameSession.turn());
       }
+      */
       //console.log(board);
       return board;
+    }
+
+    turn(i) {
+
+      $(gameSession.board[i]).toggleClass("disabled");
+
+      switch (gameSession.playerTurn) {
+        case 1:
+          $(gameSession.board[i]).toggleClass('box-filled-1');
+          break;
+        case 2:
+          $(gameSession.board[i]).toggleClass('box-filled-2');
+          break;
+      }
+
+      if (gameSession.playerTurn === 1) {
+        gameSession.playerTurn = 2;
+      }else {
+        gameSession.playerTurn = 1;
+      }
+
+      $('#player1').toggleClass('active');
+      $('#player2').toggleClass('active');
+
+      gameSession.winCheck();
+    }
+
+    winCheck(){
+      console.log("test win check");
     }
   }
 
@@ -47,6 +75,15 @@ let boardHTML = $('.boxes');
 
     gameSession = new TicTacToe("Player 1","Player 2");
     $('#player1').toggleClass('active');
+
+    for (let i = 0; i < gameSession.board.length; i++) {
+      $(gameSession.board[i]).attr("id", `${i}`);
+      console.log(gameSession.board[i]);
+      $(gameSession.board[i]).click(function () {
+        gameSession.turn(i);
+      });
+    }
+
     //console.log(gameSession);
   }
 
