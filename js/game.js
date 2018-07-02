@@ -13,36 +13,55 @@ let boardHTML = $('.boxes');
     }
 
     newBoard() {
-      let board = [];
       $('.boxes').innerHTML = boardHTML;
+
+      $('.box').click(function (e) {
+        //gameSession.turn(e.target);
+      });
+
+      let board = [];
       board = $('.boxes').children();
-      for (var i = 0; i < board.length; i++) {
+
+      for (let i = 0; i < board.length; i++) {
         $(board[i]).attr("id", `${i}`);
+        $(board[i]).click(function (){
+          alert(`This is box # ${i}`);
+        });
       }
-      console.log(board);
+      //console.log(board);
       return board;
     }
   }
 
 //Commands to run when page first loads or when a game restarts
   const startUp = () => {
+    $('#finish').hide();
     $('#board').hide();
   }
 
+//
   const startGame = () => {
     $('#start').hide('clip', 1000);
+    $('#finish').hide('clip', 1000);
     $('#board').delay(1000).show('puff', 1000);
 
     gameSession = new TicTacToe("Player 1","Player 2");
-    console.log(gameSession);
+    $('#player1').toggleClass('active');
+    //console.log(gameSession);
   }
 
+  const endGame = () => {
+    $('#board').hide();
+    $('#finish').show();
+  }
+
+//seperate functions to bind the start games button on the page
   $('#start a').click(function () {
     startGame();
   });
 
-  $('.boxes').each().click(function (e) {
-    //gameSession.turn(e.target);
+  $('#finish a').click(function () {
+    startGame();
   });
 
   startUp();
