@@ -2,6 +2,7 @@
 //Global Variables
 let gameSession = {};
 let boardHTML = $('.boxes');
+let hover = 'box-hover-1';
 
 //Game session class
   class TicTacToe {
@@ -9,51 +10,55 @@ let boardHTML = $('.boxes');
       this.playerTurn = 1;
       this.player1 = player1;
       this.player2 = player2;
-      this.board = this.newBoard();
+      this.board = [];
+
+      $('.boxes').innerHTML = boardHTML;
+      this.board = $('.boxes').children();
+      for (let i = 0; i < this.board.length; i++) {
+        $(this.board[i]).attr("id", `${i}`);
+        $(this.board[i]).click(function () {
+          gameSession.turn(i);
+          if (hover == 'box-hover-1') {
+            hover = 'box-hover-1';
+          }else {
+            hover = 'box-hover-2';
+          }
+        });
+        $(this.board[i]).hover(function () {
+          gameSession.hover(i);
+        });
+      }
     }
 
-    newBoard() {
-      $('.boxes').innerHTML = boardHTML;
-
-      $('.box').click(function (e) {
-        //gameSession.turn(e.target);
-      });
-
-      let board = [];
-      board = $('.boxes').children();
-
-      /*
-      for (let i = 0; i < board.length; i++) {
-        $(board[i]).click(gameSession.turn());
-      }
-      */
-      //console.log(board);
-      return board;
+    hover(i){
+      $(this.board[i]).toggleClass(hover);
     }
 
     turn(i) {
+      $(this.board[i]).toggleClass("disabled");
 
-      $(gameSession.board[i]).toggleClass("disabled");
-
-      switch (gameSession.playerTurn) {
+      switch (this.playerTurn) {
         case 1:
-          $(gameSession.board[i]).toggleClass('box-filled-1');
+          $(this.board[i]).toggleClass('box-filled-1');
+          this.playerTurn = 2;
           break;
         case 2:
-          $(gameSession.board[i]).toggleClass('box-filled-2');
+          $(this.board[i]).toggleClass('box-filled-2');
+          this.playerTurn = 1;
           break;
       }
 
-      if (gameSession.playerTurn === 1) {
-        gameSession.playerTurn = 2;
+/*
+      if (this.playerTurn === 1) {
+        this.playerTurn = 2;
       }else {
-        gameSession.playerTurn = 1;
+        this.playerTurn = 1;
       }
-
+*/
       $('#player1').toggleClass('active');
       $('#player2').toggleClass('active');
 
-      gameSession.winCheck();
+      this.winCheck();
     }
 
     winCheck(){
@@ -67,7 +72,7 @@ let boardHTML = $('.boxes');
     $('#board').hide();
   }
 
-//
+//starts a new game session
   const startGame = () => {
     $('#start').hide('clip', 1000);
     $('#finish').hide('clip', 1000);
@@ -75,14 +80,6 @@ let boardHTML = $('.boxes');
 
     gameSession = new TicTacToe("Player 1","Player 2");
     $('#player1').toggleClass('active');
-
-    for (let i = 0; i < gameSession.board.length; i++) {
-      $(gameSession.board[i]).attr("id", `${i}`);
-      console.log(gameSession.board[i]);
-      $(gameSession.board[i]).click(function () {
-        gameSession.turn(i);
-      });
-    }
 
     //console.log(gameSession);
   }
