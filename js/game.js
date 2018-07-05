@@ -17,25 +17,41 @@ let boardHTML = $('.boxes');
         $(this.board[i]).attr("id", `${i}`);
         $(this.board[i]).click(function () {
           gameSession.turn(i);
+        }).hover(function () {
+          if (gameSession.playerTurn === 1) {
+            $(gameSession.board[i]).addClass('box-hover-1');
+          }else {
+            $(gameSession.board[i]).addClass('box-hover-2');
+          }
+        }, function (){
+          if (gameSession.playerTurn === 1) {
+            $(gameSession.board[i]).removeClass('box-hover-1');
+          }else {
+            $(gameSession.board[i]).removeClass('box-hover-2');
+          }
         });
       }
     }
 
-
     turn(i) {
       $(this.board[i]).toggleClass("disabled");
-
+console.log(this.playerTurn);
       switch (this.playerTurn) {
         case 1:
-          $(this.board[i]).toggleClass('box-filled-1');
+          $(this.board[i]).addClass('box-filled-1');
+          $(this.board[i]).removeClass('box-filled-2');
+          $(this.board[i]).removeClass('box-hover-2');
+          $(this.board[i]).removeClass('box-hover-1');
           this.playerTurn = 2;
           break;
         case 2:
-          $(this.board[i]).toggleClass('box-filled-2');
+          $(this.board[i]).addClass('box-filled-2');
+          $(this.board[i]).removeClass('box-filled-1');
+          $(this.board[i]).removeClass('box-hover-1');
+          $(this.board[i]).removeClass('box-hover-2');
           this.playerTurn = 1;
           break;
       }
-
 /*
       if (this.playerTurn === 1) {
         this.playerTurn = 2;
@@ -69,15 +85,16 @@ let boardHTML = $('.boxes');
     gameSession = new TicTacToe("Player 1","Player 2");
     $('#player1').toggleClass('active');
 
-    $(gameSession.board).hover(function () {
+/*
+    $('.box').hover(function () {
+      console.log(gameSession.playerTurn);
       if (gameSession.playerTurn === 1) {
-        $(this).attr('background-color', '#AAA');
+        $(this).addClass('box-hover-1');
       }else {
-        console.log('x');
-        $(this).css('background-image', 'url(../img/x.svg)');
+        $(this).addClass('box-hover-2');
       }
     });
-
+*/
     //console.log(gameSession);
   }
 

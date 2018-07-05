@@ -134,15 +134,15 @@ h1 {
     .boxes .box-filled-1 {
       background-color: #FFA000;
       background-image: url(../img/o.svg); }
-    .boxes .box-hover-1 {
-      background-color: #EFEFEF;
-      background-image: url(../img/o.svg); }
+      .boxes .box-hover-1 {
+        background-color: #EFEFEF;
+        background-image: url(../img/o.svg); }
     .boxes .box-filled-2 {
       background-color: #3688C3;
       background-image: url(../img/x.svg); }
-    .boxes .box-hover-2 {
-      background-color: #EFEFEF;
-      background-image: url(../img/x.svg); }
+      .boxes .box-hover-2 {
+        background-color: #EFEFEF;
+        background-image: url(../img/x.svg); }
 
 .disabled {
   pointer-events:none;
