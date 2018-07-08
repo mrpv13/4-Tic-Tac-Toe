@@ -15,6 +15,7 @@ let boardHTML = $('.boxes').clone();
       $('#player1').addClass('active');
       $('#player2').removeClass('active');
 
+      //resets the board and adds the click and hover functionility to the game
       $('.boxes').replaceWith(boardHTML.clone());
       this.board = $('.boxes').children();
       for (let i = 0; i < this.board.length; i++) {
@@ -37,6 +38,7 @@ let boardHTML = $('.boxes').clone();
       }
     }
 
+    //turn function that colors the tile based on the player turn and checks for win condition
     turn(i) {
       $(this.board[i]).toggleClass("disabled");
       switch (this.playerTurn) {
@@ -54,11 +56,11 @@ let boardHTML = $('.boxes').clone();
           break;
       }
 
-      $('#player1').toggleClass('active');
-      $('#player2').toggleClass('active');
-
       this.count++;
       this.winCheck(i);
+
+      $('#player1').toggleClass('active');
+      $('#player2').toggleClass('active');
 
       if (this.playerTurn === 1) {
         this.playerTurn = 2;
@@ -67,6 +69,7 @@ let boardHTML = $('.boxes').clone();
       }
     }
 
+    //win check function, if any of the conditions are met it ends the game
     winCheck(i){
       if (this.playerTurn === 1) {
         if ($(this.board[0]).hasClass('box-filled-1') && $(this.board[1]).hasClass('box-filled-1') && $(this.board[2]).hasClass('box-filled-1')) {
@@ -148,6 +151,7 @@ let boardHTML = $('.boxes').clone();
     if (winner === 'tie') {
       $('#finish').addClass('screen-win-tie');
       $('.message').html('Tie game!');
+      return;
     }
     if (gameSession.playerTurn === 1) {
       $('#finish').addClass('screen-win-one');
